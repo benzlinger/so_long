@@ -6,7 +6,7 @@
 #    By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/27 16:48:18 by btenzlin          #+#    #+#              #
-#    Updated: 2022/01/28 12:37:42 by btenzlin         ###   ########.fr        #
+#    Updated: 2022/01/31 17:43:13 by btenzlin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,10 @@ RM = rm -rf
 
 SRCS = main.c \
 		get_next_line.c \
-		get_next_line_utils.c
+		get_next_line_utils.c \
+		map.c \
+		map_utils.c \
+		territory.c
 
 OBJS = ${SRCS:.c=.o}
 

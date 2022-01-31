@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:32:22 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/01/28 13:25:34 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:01:10 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@ typedef struct s_data {
 	int		endian;
 }				t_data;
 
+int	ft_close(int keycode, t_game game)
+{
+	if (keycode == 53)
+		mlx_destroy_window(game.mlx, game.win);
+	return (0);
+}
+
+int	ft_close_x(int keycode, t_game game)
+{
+	mlx_destroy_window(game.mlx, game.win);
+	return (0);
+}
+
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -28,23 +41,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	put_square(t_data *data, int color)
+int	ft_key_hook(int	keycode, t_game game)
 {
-	int	x;
-	int	y;
-
-	x = 5;
-	y = 5;
-	while (x <= 50)
-	{
-		while (y <= 50)
-		{
-			my_mlx_pixel_put(data, x, y, color);
-			y++;
-		}
-		y = 5;
-		x++;
-	}
+	printf("Key pressed. %d\n", keycode);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -53,15 +53,16 @@ int	main(int argc, char **argv)
 	t_data	img;
 
 	if (argc < 2)
-		printf("Error. Please enter a map as parameter.\n");
+		printf("Error: Please enter a map as parameter.\n");
 	else if (argc > 2)
-		printf("Error. To many parameters.\n");
+		printf("Error: To many parameters.\n");
+	check_map(argv[1], &game);
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, 500, 500, "mlx_42");
-	img.img = mlx_new_image(game.mlx, 500, 500);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
-	put_square(&img, 0x00FF0000);
-	mlx_put_image_to_window(game.mlx, game.win, img.img, 0, 0);
+	game.win = mlx_new_window(game.mlx, game.x * 64, game.y * 64, "so_long");
+	init_territory(&game);
+	// // mlx_key_hook(game.win, ft_key_hook, &game);
+	// // mlx_hook(game.win, 2, 1L << 0, ft_close, &game);
+	// // mlx_hook(game.win, 17, 0, ft_close_x, &game);
 	mlx_loop(game.mlx);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:24:59 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/01/31 17:25:35 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:29:58 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,16 @@
 void	err_msg(int i)
 {
 	if (i == 0)
-	{
 		printf("Error\n");
-		exit(0);
-	}
 	else if (i == 1)
-	{
 		printf("Error. Empty map.\n");
-		exit (0);
-	}
 	else if (i == 2)
-	{
 		printf("Error. Malloc failed.\n");
-		exit (0);
-	}
+	else if (i == 3)
+		printf("Error. Please enter a map.\n");
+	else if (i == 4)
+		printf("Error. Too many arguments.\n");
+	exit(0);
 }
 
 static void	init_map(char *line, int fd, t_game *game)

@@ -6,13 +6,13 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:03:32 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/01/31 15:56:18 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:14:04 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_map(t_game *game)
+int	free_map(t_game *game)
 {
 	int		i;
 

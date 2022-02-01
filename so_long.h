@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:53:08 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/01/31 17:53:40 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:21:14 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ typedef struct s_game
 	int		nE;
 	int		nC;
 	int		nP;
+	int		isP;
+	int		nCmd;
+	int		posX;
+	int		posY;
 }					t_game;
 
 /* get next line */
@@ -45,9 +49,13 @@ void	check_map(char *argv, t_game *game);
 /* map utils */
 int		is_rectangular(t_game *game);
 int		check_chars(t_game *game);
-void	free_map(t_game *game);
+int		free_map(t_game *game);
 
 /* territory */
 void	init_territory(t_game *game);
+void	init_tile(t_game *game, int x, int y);
+
+/* game */
+int		press_button(int keycode, t_game *game);
 
 #endif

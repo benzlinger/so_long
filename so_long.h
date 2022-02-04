@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:53:08 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/02/01 15:21:14 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:07:45 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ int		is_eol(char *s);
 
 /* map */
 void	err_msg(int i);
-void	check_map(char *argv, t_game *game);
+int		is_enclosed(t_game *game);
+void	init_map(t_game *game, char *argv);
+int		get_size(char *argv);
 
 /* map utils */
 int		is_rectangular(t_game *game);

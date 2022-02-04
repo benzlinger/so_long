@@ -6,7 +6,7 @@
 #    By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/27 16:48:18 by btenzlin          #+#    #+#              #
-#    Updated: 2022/02/01 15:20:19 by btenzlin         ###   ########.fr        #
+#    Updated: 2022/02/02 13:54:16 by btenzlin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ all: $(NAME)
 $(NAME) : $(OBJS)
 	@printf "%b" $(GREEN) "creating so_long...\n\n" $(NO_COLOR)
 	@$(CC) $(FLAGS) $(OBJS) -Llibmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
-	@printf "%b" $(GREEN) "done!" $(NO_COLOR)
+	@printf "%b" $(GREEN) "done!\n" $(NO_COLOR)
 
 re: fclean all
 
@@ -50,6 +50,7 @@ fclean: clean
 	@printf "%b" $(GREEN) "done!\n" $(NO_COLOR)
 
 norm:
-	$(NORM) $(SRCS) so_long.h
+	@$(NORM) $(SRCS) so_long.h
+	@printf "%b" $(GREEN) "OK!\n" $(NO_COLOR)
 
 .PHONY: all clean fclean re norminette

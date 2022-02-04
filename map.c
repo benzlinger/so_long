@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:24:59 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/02/01 11:29:58 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:16:27 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,61 @@ void	err_msg(int i)
 	if (i == 0)
 		printf("Error\n");
 	else if (i == 1)
-		printf("Error. Empty map.\n");
+		printf("Error\nEmpty map.\n");
 	else if (i == 2)
-		printf("Error. Malloc failed.\n");
+	{
+		printf("Error\nMalloc failed.\n");
+		return ;
+	}
 	else if (i == 3)
-		printf("Error. Please enter a map.\n");
+		printf("Error\nPlease enter a map.\n");
 	else if (i == 4)
-		printf("Error. Too many arguments.\n");
+		printf("Error\nToo many arguments.\n");
 	exit(0);
 }
 
-static void	init_map(char *line, int fd, t_game *game)
+int	get_size(char *argv)
 {
-	int		i;
-	char	**temp;
+	int		fd;
+	char	*line;
+	int		count;
 
+	fd = open(argv, O_RDONLY);
+	line = get_next_line(fd);
+	count = 0;
 	while (line)
 	{
-		temp = game->map;
-		game->y++;
-		game->map = malloc(sizeof(char *) * (game->y + 1));
-		if (!(game->map))
-			err_msg(2);
-		game->map[(game->y) - 1] = line;
-		game->map[game->y] = NULL;
-		i = 2;
-		while ((game->y) - i >= 0)
-		{
-			game->map[(game->y) - i] = temp[(game->y) - i];
-			i++;
-		}
-		if (!temp)
-			free (temp);
+		count++;
+		free(line);
 		line = get_next_line(fd);
 	}
+	if (line)
+		free(line);
+	close(fd);
+	if (count == 0)
+		err_msg(1);
+	return (count);
+}
+
+void	init_map(t_game *game, char *argv)
+{
+	int		count;
+	int		fd;
+
+	count = 0;
+	fd = open(argv, O_RDONLY);
+	if (fd == -1)
+		err_msg(0);
+	game->map = malloc(sizeof(char *) * (game->y + 1));
+	if (!game->map)
+		err_msg(2);
+	while (count <= game->y)
+	{
+		game->map[count] = get_next_line(fd);
+		count++;
+	}
+	game->map[count] = NULL;
+	close(fd);
 }
 
 static int	is_enclosed_helper(t_game *game)
@@ -76,7 +97,7 @@ static int	is_enclosed_helper(t_game *game)
 	return (1);
 }
 
-static int	is_enclosed(t_game *game)
+int	is_enclosed(t_game *game)
 {
 	int	count;
 
@@ -96,29 +117,4 @@ static int	is_enclosed(t_game *game)
 		return (0);
 	}
 	return (1);
-}
-
-void	check_map(char *argv, t_game *game)
-{
-	int		fd;
-	char	*line;
-
-	game->nE = 0;
-	game->nC = 0;
-	game->nP = 0;
-	fd = open(argv, O_RDONLY);
-	if (fd == -1)
-		err_msg(0);
-	line = get_next_line(fd);
-	if (!line)
-		err_msg(1);
-	game->y = 0;
-	init_map(line, fd, game);
-	close (fd);
-	if (!is_rectangular(game))
-		free_map(game);
-	if (!is_enclosed(game))
-		free_map(game);
-	if (!check_chars(game))
-		free_map(game);
 }

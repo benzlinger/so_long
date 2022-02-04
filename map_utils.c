@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:03:32 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/02/01 14:14:04 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:27:17 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	free_map(t_game *game)
 {
-	int		i;
+	int	count;
 
-	if (game->map != NULL)
+	count = 0;
+	if (game->map)
 	{
-		i = 0;
-		while (game->map[i] != NULL)
+		while (game->map[count])
 		{
-			free(game->map[i]);
-			i++;
+			free(game->map[count]);
+			count++;
 		}
 		free(game->map);
 	}

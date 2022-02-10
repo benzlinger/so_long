@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 16:53:08 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/02/04 15:07:45 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:37:19 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define SO_LONG_H
 
 # include "libmlx/mlx.h"
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <limits.h>
 
 typedef struct s_game
 {
@@ -59,5 +59,8 @@ void	init_tile(t_game *game, int x, int y);
 
 /* game */
 int		press_button(int keycode, t_game *game);
+
+/* putnbr */
+void	ft_putnbr_fd(int n, int fd);
 
 #endif

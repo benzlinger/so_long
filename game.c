@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:53 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/02/03 15:04:05 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:35:54 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,16 @@ static void	move_player(t_game *game, int x, int y)
 		game->nC--;
 	game->map[game->posY][game->posX] = '0';
 	init_tile(game, game->posX, game->posY);
-	printf("%d\n", ++(game->nCmd));
+	ft_putnbr_fd(++(game->nCmd), 1);
+	write(1, "\n", 1);
 	game->isP = 0;
 	game->posY += y;
 	game->posX += x;
 	if (game->map[game->posY][game->posX] == 'E')
+	{
+		mlx_destroy_window(game->mlx, game->win);
 		free_map(game);
+	}
 	game->map[game->posY][game->posX] = 'P';
 	init_tile(game, game->posX, game->posY);
 }

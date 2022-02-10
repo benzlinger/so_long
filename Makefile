@@ -6,7 +6,7 @@
 #    By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/27 16:48:18 by btenzlin          #+#    #+#              #
-#    Updated: 2022/02/02 13:54:16 by btenzlin         ###   ########.fr        #
+#    Updated: 2022/02/09 14:36:10 by btenzlin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRCS = main.c \
 		map.c \
 		map_utils.c \
 		territory.c \
-		game.c
+		game.c \
+		putnbr.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -34,6 +35,7 @@ all: $(NAME)
 
 $(NAME) : $(OBJS)
 	@printf "%b" $(GREEN) "creating so_long...\n\n" $(NO_COLOR)
+	@cd libmlx && make --silent
 	@$(CC) $(FLAGS) $(OBJS) -Llibmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 	@printf "%b" $(GREEN) "done!\n" $(NO_COLOR)
 
@@ -49,8 +51,14 @@ fclean: clean
 	@$(RM) $(NAME)
 	@printf "%b" $(GREEN) "done!\n" $(NO_COLOR)
 
+liball:
+	@cd libmlx && make
+
+libclean:
+	@cd libmlx && make clean
+
 norm:
 	@$(NORM) $(SRCS) so_long.h
 	@printf "%b" $(GREEN) "OK!\n" $(NO_COLOR)
 
-.PHONY: all clean fclean re norminette
+.PHONY: all clean fclean re norm liball libclean

@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:24:59 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/02/04 15:16:27 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:29:57 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 void	err_msg(int i)
 {
 	if (i == 0)
-		printf("Error\n");
+		write(2, "Error\n", 6);
 	else if (i == 1)
-		printf("Error\nEmpty map.\n");
+		write(2, "Error\nEmpty map.\n", 17);
 	else if (i == 2)
 	{
-		printf("Error\nMalloc failed.\n");
+		write(2, "Error\nMalloc failed.\n", 21);
 		return ;
 	}
 	else if (i == 3)
-		printf("Error\nPlease enter a map.\n");
+		write(2, "Error\nPlease enter a map.\n", 26);
 	else if (i == 4)
-		printf("Error\nToo many arguments.\n");
+		write(2, "Error\nToo many arguments.\n", 26);
 	exit(0);
 }
 
@@ -70,7 +70,6 @@ void	init_map(t_game *game, char *argv)
 		game->map[count] = get_next_line(fd);
 		count++;
 	}
-	game->map[count] = NULL;
 	close(fd);
 }
 
@@ -106,14 +105,14 @@ int	is_enclosed(t_game *game)
 	{
 		if ((game->map[0][count]) != '1')
 		{
-			printf("Error\nMap is not enclosed.\n");
+			write(2, "Error\nMap is not surrounded by walls.\n", 38);
 			return (0);
 		}
 		count++;
 	}
 	if (!is_enclosed_helper(game))
 	{
-		printf("Error\nMap is not enclosed.\n");
+		write(2, "Error\nMap is not surrounded by walls.\n", 38);
 		return (0);
 	}
 	return (1);

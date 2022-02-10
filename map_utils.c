@@ -6,7 +6,7 @@
 /*   By: btenzlin <btenzlin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:03:32 by btenzlin          #+#    #+#             */
-/*   Updated: 2022/02/04 15:27:17 by btenzlin         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:26:54 by btenzlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	is_rectangular(t_game *game)
 		len = ft_strlen_sl(game->map[i]);
 		if (len != game->x)
 		{
-			printf("Error\nMap is not rectangular.\n");
+			write(2, "Error\nMap is not rectangular.\n", 30);
 			return (0);
 		}
 		i++;
@@ -61,21 +61,26 @@ int	is_rectangular(t_game *game)
 	return (1);
 }
 
-static int	check_chars_helper(int e, int c, int p)
+static int	check_chars_helper(int e, int c, int p, int fc)
 {
 	if (e < 1)
 	{
-		printf("Error\nMust be at least 1 exit.\n");
+		write(2, "Error\nMust be at least 1 exit.\n", 31);
 		return (0);
 	}
 	if (c < 1)
 	{
-		printf("Error\nMust be at least 1 collectible.\n");
+		write(2, "Error\nMust be at least 1 collectible.\n", 38);
 		return (0);
 	}
 	if (p != 1)
 	{
-		printf("Error\nMust be 1 starting position.\n");
+		write(2, "Error\nMust be 1 starting position.\n", 35);
+		return (0);
+	}
+	if (!fc)
+	{
+		write(2, "Error\nForbidden character.\n", 27);
 		return (0);
 	}
 	return (1);
@@ -94,14 +99,16 @@ int	check_chars(t_game *game)
 		{
 			if (game->map[i][j] == 'E')
 				game->nE++;
-			if (game->map[i][j] == 'C')
+			else if (game->map[i][j] == 'C')
 				game->nC++;
-			if (game->map[i][j] == 'P')
+			else if (game->map[i][j] == 'P')
 				game->nP++;
+			else if (game->map[i][j] != '0' && game->map[i][j] != '1')
+				return (check_chars_helper(1, 1, 1, 0));
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	return (check_chars_helper(game->nE, game->nC, game->nP));
+	return (check_chars_helper(game->nE, game->nC, game->nP, 1));
 }
